@@ -25,12 +25,13 @@
   padding: 10px;
 }
 
-.invalid-input {
-  border: 1px solid red;
-}
-
 .required {
   color: red;
+}
+
+.error {
+  color: red;
+  font-size: 10px;
 }
 
 .content {

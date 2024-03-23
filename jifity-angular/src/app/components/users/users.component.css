@@ -37,6 +37,10 @@
   text-align: left;
 }
 
+.usersContent th {
+  text-decoration: underline;
+}
+
 .usersContent .center {
   text-align: center;
 }

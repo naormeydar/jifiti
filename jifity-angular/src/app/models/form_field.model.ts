@@ -1,4 +1,4 @@
-export interface FormField {
+export interface IFormField {
   key: string;
   label: string;
   type: string;
