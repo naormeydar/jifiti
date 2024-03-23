@@ -1,0 +1,27 @@
+<div class="container">
+  <app-header></app-header>
+  <div class="usersContent">
+    <h1 class="title">Users List</h1>
+    <div class="tableContainer">
+      <table>
+        <thead>
+          <tr>
+            <th>Full name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th class="center">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td class="center"><button class="mainBtn" (click)="goToEdit(user.id)">Edit</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div><button (click)="goToNewUser()" class="mainBtn addUserBtn">Add New User</button></div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="container">
+  <app-header [showBackButton]="true"></app-header>
+  <div class="content">
+    <div>
+      <h1 class="title">User Details</h1>
+      <h4 class="subtitle">Fill out new user's personal info</h4>
+    </div>
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="formFields">
+        <div *ngFor="let field of formFields" class="formRow">
+          <label for="{{ field.key }}">{{ field.label }} <span *ngIf="field.validators" class="required">*</span></label>
+          <input type="{{ field.type }}" id="{{ field.key }}" formControlName="{{ field.key }}" [ngClass]="{ 'invalid-input': userForm.get(field.key)?.invalid && userForm.get(field.key)?.touched }">
+        </div>
+      </div>
+      <button class="mainBtn submitBtn" type="submit" [disabled]="!userForm.valid">Save</button>
+    </form>
+  </div>
+</div>
