@@ -96,7 +96,6 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   getFieldPattern(field: IFormField): string | RegExp {
-    console.log(this.userForm);
     if (field.validators.includes("phone")) {
       return '[0]{1}[5]{1}[023459]{1}-[0-9]{3}-[0-9]{4}';
     } else if (field.validators.includes("email")) {
