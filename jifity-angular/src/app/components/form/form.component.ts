@@ -47,7 +47,6 @@ export class FormComponent implements OnInit, OnDestroy {
       this.buildForm();
     } catch (error) {
       console.error('Error fetching form fields:', error);
-      // Handle error as needed
     }
   }
 
