@@ -1,15 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormService } from '../../services/form.service';
 import { UserService } from '../../services/user.service';
 import { IUser } from '../../models/user.model';
 import { IFormField } from '../../models/form_field.model';
-
-interface FormControls {
-  [key: string]: any;
-}
 
 @Component({
   selector: 'app-form',
@@ -34,15 +30,28 @@ export class FormComponent implements OnInit, OnDestroy {
     this.userForm = this.formBuilder.group({});
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.userId = +this.route.snapshot.params['id'];
-    this.subscriptions.push(
-      this.formService.getUserFormFields().subscribe(data => {
-        this.formFields = data.form_fields;
-        this.buildForm();
-      })
-    );
+    await this.fetchFormFields();
+    this.fetchUserDetails();
+  }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  private async fetchFormFields(): Promise<void> {
+    try {
+      const data = await this.formService.getUserFormFields().toPromise();
+      this.formFields = data.form_fields;
+      this.buildForm();
+    } catch (error) {
+      console.error('Error fetching form fields:', error);
+      // Handle error as needed
+    }
+  }
+
+  private fetchUserDetails(): void {
     if (this.userId) {
       this.formSubtitle = "Edit user's personal info";
       this.subscriptions.push(
@@ -62,12 +71,8 @@ export class FormComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-
   private buildForm(): void {
-    const formGroup: FormControls = {};
+    const formGroup: { [key: string]: any } = {};
     this.formFields.forEach(field => {
       formGroup[field.key] = ['', Validators.required];
     });
